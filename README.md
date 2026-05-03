@@ -48,3 +48,4 @@ VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
 ```
 
 If these keys are missing or invalid (less than 100 characters), the app will automatically revert to **Mock Mode**.
+## Demo Video Link - 
