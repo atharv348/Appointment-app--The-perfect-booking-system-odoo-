@@ -96,9 +96,24 @@ const createQueryBuilder = (tableName: string) => {
       return { data, error: null };
     },
     insert: (data: any) => {
-      const newItem = { ...data, id: Math.random().toString(36).substr(2, 9), created_at: new Date().toISOString() };
+      const newItem = { 
+        ...data, 
+        id: Math.random().toString(36).substr(2, 9), 
+        created_at: new Date().toISOString(),
+        active: data.active ?? true,
+        price_cents: data.price_cents ?? 0,
+        duration_minutes: data.duration_minutes ?? 60
+      };
       mockData[tableName]?.push(newItem);
-      return builder;
+      
+      // Update builder to return the single new item for .single() or .maybeSingle()
+      const resultBuilder = {
+        ...builder,
+        single: async () => ({ data: newItem, error: null }),
+        maybeSingle: async () => ({ data: newItem, error: null }),
+        then: (callback: any) => Promise.resolve(callback({ data: newItem, error: null }))
+      };
+      return resultBuilder;
     },
     update: (data: any) => builder,
     delete: () => builder,
