@@ -12,13 +12,13 @@ function createSupabaseClient() {
   const isPlaceholder = (val?: string) => {
      if (!val) return true;
      const v = val.toLowerCase();
-     // Real Supabase anon keys are usually > 100 characters JWTs
-     // Real Supabase URLs are usually https://[project-id].supabase.co
-     return v.includes('your-') || v.includes('placeholder') || v.length < 10 || (v.startsWith('http') && !v.includes('.supabase.'));
+     // If it's the exact string from a common template, or too short to be a JWT, it's a placeholder
+     // Real Supabase anon keys are very long JWTs (usually 300+ chars)
+     return v.includes('your-') || v.includes('placeholder') || v.length < 100 || (v.startsWith('http') && !v.includes('.supabase.'));
    };
 
   if (isPlaceholder(SUPABASE_URL) || isPlaceholder(SUPABASE_PUBLISHABLE_KEY)) {
-    console.warn('[Supabase v2] Missing or invalid environment variables. Using mock client.');
+    console.warn('[Supabase v3] Missing or invalid environment variables. Forcing mock mode.');
     return mockSupabase as any;
   }
 

@@ -13,7 +13,7 @@ function createSupabaseAdminClient() {
   const isPlaceholder = (val?: string) => {
     if (!val) return true;
     const v = val.toLowerCase();
-    return v.includes('your-') || v.includes('placeholder') || v.length < 10 || (v.startsWith('http') && !v.includes('.supabase.'));
+    return v.includes('your-') || v.includes('placeholder') || v.length < 100 || (v.startsWith('http') && !v.includes('.supabase.'));
   };
 
   if (isPlaceholder(SUPABASE_URL) || isPlaceholder(SUPABASE_SERVICE_ROLE_KEY)) {
