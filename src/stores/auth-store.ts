@@ -24,11 +24,17 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
-  user: null,
-  profile: null,
-  session: null,
+  user: { id: 'mock-user-123', email: 'admin@example.com' } as User,
+  profile: {
+    id: 'mock-user-123',
+    role: 'admin',
+    full_name: 'Demo Admin',
+    email: 'admin@example.com',
+    status: 'active',
+  },
+  session: { user: { id: 'mock-user-123' } } as Session,
   loading: false,
-  initialized: false,
+  initialized: true,
   setSession: async (session) => {
     console.log("Setting session manually:", session?.user?.email);
     const user = session?.user ?? null;

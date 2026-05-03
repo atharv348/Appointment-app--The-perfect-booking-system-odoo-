@@ -21,7 +21,22 @@ function Home() {
     return <CustomerHome />;
   }
 
+  if (user && (profile?.role === "admin" || profile?.role === "organiser")) {
+    return <AppLayoutRedirect />;
+  }
+
   return <Landing />;
+}
+
+import { useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+
+function AppLayoutRedirect() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate({ to: "/app" });
+  }, [navigate]);
+  return null;
 }
 
 function CustomerHome() {

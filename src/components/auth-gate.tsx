@@ -13,6 +13,9 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!initialized) return;
 
+    // Bypass login for demonstration
+    return;
+
     if (!user) {
       if (location.pathname !== "/login" && location.pathname !== "/signup" && location.pathname !== "/reset-password") {
         navigate({ to: "/login" });
@@ -61,7 +64,10 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
     );
   }
   
-  if (!user && (location.pathname !== "/login" && location.pathname !== "/signup" && location.pathname !== "/reset-password")) return null;
+  if (!user && (location.pathname !== "/login" && location.pathname !== "/signup" && location.pathname !== "/reset-password")) {
+    // Return children even if no user for demo mode
+    return <>{children}</>;
+  }
   
   return <>{children}</>;
 }
