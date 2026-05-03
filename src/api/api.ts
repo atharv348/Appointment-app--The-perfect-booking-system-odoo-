@@ -36,7 +36,7 @@ const ownerId = async () => {
     console.warn("[API] Auth check exception, falling back to mock ID:", e);
   }
   // Default fallback for mock/demo mode to ensure app never hangs on "Not authenticated"
-  console.log("[API] Using mock owner ID: mock-user-123");
+  console.log("[API v2] Using mock owner ID: mock-user-123");
   return "mock-user-123";
 };
 

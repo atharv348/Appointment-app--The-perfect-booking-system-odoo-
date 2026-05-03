@@ -18,7 +18,7 @@ function createSupabaseClient() {
    };
 
   if (isPlaceholder(SUPABASE_URL) || isPlaceholder(SUPABASE_PUBLISHABLE_KEY)) {
-    console.warn('[Supabase] Missing or invalid environment variables. Using mock client for demonstration.');
+    console.warn('[Supabase v2] Missing or invalid environment variables. Using mock client.');
     return mockSupabase as any;
   }
 
