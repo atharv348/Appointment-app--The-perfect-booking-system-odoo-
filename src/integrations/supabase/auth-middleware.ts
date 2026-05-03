@@ -12,7 +12,11 @@ export const requireSupabaseAuth = createMiddleware({ type: 'function' }).server
     const SUPABASE_URL = process.env.SUPABASE_URL;
     const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
 
-    const isPlaceholder = (val?: string) => !val || val.includes('your-') || val.includes('placeholder');
+    const isPlaceholder = (val?: string) => {
+       if (!val) return true;
+       const v = val.toLowerCase();
+       return v.includes('your-') || v.includes('placeholder') || v.length < 10 || (v.startsWith('http') && !v.includes('.supabase.'));
+     };
 
     if (isPlaceholder(SUPABASE_URL) || isPlaceholder(SUPABASE_PUBLISHABLE_KEY)) {
       console.warn('[Supabase] Missing or invalid environment variables. Bypassing auth middleware with mock user.');

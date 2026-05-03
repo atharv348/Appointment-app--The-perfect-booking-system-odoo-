@@ -9,7 +9,13 @@ function createSupabaseClient() {
   const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
   const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY;
 
-  const isPlaceholder = (val?: string) => !val || val.includes('your-') || val.includes('placeholder');
+  const isPlaceholder = (val?: string) => {
+     if (!val) return true;
+     const v = val.toLowerCase();
+     // Real Supabase anon keys are usually > 100 characters JWTs
+     // Real Supabase URLs are usually https://[project-id].supabase.co
+     return v.includes('your-') || v.includes('placeholder') || v.length < 10 || (v.startsWith('http') && !v.includes('.supabase.'));
+   };
 
   if (isPlaceholder(SUPABASE_URL) || isPlaceholder(SUPABASE_PUBLISHABLE_KEY)) {
     console.warn('[Supabase] Missing or invalid environment variables. Using mock client for demonstration.');

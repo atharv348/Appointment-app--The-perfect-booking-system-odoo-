@@ -104,7 +104,8 @@ const createQueryBuilder = (tableName: string) => {
         price_cents: data.price_cents ?? 0,
         duration_minutes: data.duration_minutes ?? 60
       };
-      mockData[tableName]?.push(newItem);
+      if (!mockData[tableName]) mockData[tableName] = [];
+      mockData[tableName].push(newItem);
       
       // Update builder to return the single new item for .single() or .maybeSingle()
       const resultBuilder = {
